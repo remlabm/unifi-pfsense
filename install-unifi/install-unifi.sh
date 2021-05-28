@@ -4,7 +4,7 @@
 # Installs the Uni-Fi controller software on a FreeBSD machine (presumably running pfSense).
 
 # The latest version of UniFi:
-UNIFI_SOFTWARE_URL="https://dl.ui.com/unifi/6.1.71/UniFi.unix.zip" #Main Branch
+UNIFI_SOFTWARE_URL="https://dl.ui.com/unifi/6.2.25/UniFi.unix.zip" #Main Branch
 
 # The rc script associated with this branch or fork:
 RC_SCRIPT_URL="https://raw.githubusercontent.com/gozoinks/unifi-pfsense/master/rc.d/unifi.sh"
@@ -85,15 +85,20 @@ echo " done."
 #remove mongodb34 - discontinued
 echo "Removing packages discontinued..."
 if [ `pkg info | grep -c mongodb-` -eq 1 ]; then
-	env ASSUME_ALWAYS_YES=YES /usr/sbin/pkg delete mongodb
+         pkg unlock -yq mongodb
+	 env ASSUME_ALWAYS_YES=YES /usr/sbin/pkg delete mongodb
 fi
 
 if [ `pkg info | grep -c mongodb34-` -eq 1 ]; then
-	env ASSUME_ALWAYS_YES=YES /usr/sbin/pkg delete mongodb34
+         pkg unlock -yq mongodb34 
+	 env ASSUME_ALWAYS_YES=YES /usr/sbin/pkg delete mongodb34
 fi
 echo " done."
 
-
+if [ `pkg info | grep -c mongodb36-` -eq 1 ]; then
+        pkg unlock -yq mongodb36
+	env ASSUME_ALWAYS_YES=YES /usr/sbin/pkg delete mongodb36
+fi
 
 
 # Install mongodb, OpenJDK, and unzip (required to unpack Ubiquiti's download):
@@ -158,7 +163,7 @@ AddPkg snappy
 AddPkg cyrus-sasl
 AddPkg icu
 AddPkg boost-libs
-AddPkg mongodb36
+AddPkg mongodb42
 AddPkg unzip
 AddPkg pcre
 
