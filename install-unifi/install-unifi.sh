@@ -93,12 +93,17 @@ if [ `pkg info | grep -c mongodb34-` -eq 1 ]; then
          pkg unlock -yq mongodb34 
 	 env ASSUME_ALWAYS_YES=YES /usr/sbin/pkg delete mongodb34
 fi
-echo " done."
 
 if [ `pkg info | grep -c mongodb36-` -eq 1 ]; then
         pkg unlock -yq mongodb36
 	env ASSUME_ALWAYS_YES=YES /usr/sbin/pkg delete mongodb36
 fi
+
+if [ `pkg info | grep -c mongodb42-` -eq 1 ]; then
+        pkg unlock -yq mongodb42
+	env ASSUME_ALWAYS_YES=YES /usr/sbin/pkg delete mongodb42
+fi
+echo " done."
 
 
 # Install mongodb, OpenJDK, and unzip (required to unpack Ubiquiti's download):
@@ -163,7 +168,7 @@ AddPkg snappy
 AddPkg cyrus-sasl
 AddPkg icu
 AddPkg boost-libs
-AddPkg mongodb42
+AddPkg mongodb36
 AddPkg unzip
 AddPkg pcre
 
